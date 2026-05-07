@@ -7,6 +7,7 @@ function App() {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
   async function fetchTransactions() {
     try {
       const response = await fetch(`${API_URL}/transactions/`);
@@ -19,9 +20,8 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
+  fetchTransactions();
+}, []);
 
   const receitas = transactions
     .filter((transaction) => transaction.tipo === "receita")
