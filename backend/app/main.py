@@ -12,10 +12,7 @@ app = FastAPI(title="Financeiro Office API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "https://*.githubpreview.dev"
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,9 +27,9 @@ def on_startup():
 
 def seed_transactions():
     with Session(engine) as session:
-        existing_transactions = session.exec(select(Transaction)).first()
+        existing_transaction = session.exec(select(Transaction)).first()
 
-        if existing_transactions:
+        if existing_transaction:
             return
 
         transactions = [
@@ -56,13 +53,6 @@ def seed_transactions():
                 descricao="Internet e telefone",
                 categoria="Operacional",
                 tipo=TransactionType.despesa,
-            ),
-            Transaction(
-                valor=1200.00,
-                data=date(2026, 5, 4),
-                descricao="Consultoria recebida",
-                categoria="Receita de serviços",
-                tipo=TransactionType.receita,
             ),
         ]
 
